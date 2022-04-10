@@ -86,25 +86,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Personal Expenses",
-          style: TextStyle(fontFamily: 'Opensans'),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () => {_startAddNewTransactionBottomSheet(context)},
-            icon: const Icon(Icons.add),
-          ),
-        ],
+    final appBar = AppBar(
+      title: const Text(
+        "Personal Expenses",
+        style: TextStyle(fontFamily: 'Opensans'),
       ),
+      actions: [
+        IconButton(
+          onPressed: () => {_startAddNewTransactionBottomSheet(context)},
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ChartWidget(recentTransactions: _recentTransaction),
-            TransactionList(_transactions, _removeTransaction),
+            SizedBox(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.32,
+                child: ChartWidget(recentTransactions: _recentTransaction)),
+            SizedBox(
+                height: (MediaQuery.of(context).size.height -
+                    appBar.preferredSize.height -
+                    MediaQuery.of(context).padding.top) * 0.7,
+                child: TransactionList(_transactions, _removeTransaction)),
           ],
         ),
       ),
@@ -114,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
         isExtended: true,
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
